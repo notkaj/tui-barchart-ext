@@ -1,10 +1,10 @@
 // use alloc::string::{String, ToString};
 
-use ratatui::buffer::Buffer;
-use ratatui::layout::Rect;
-use ratatui::style::{Style, Styled};
-use ratatui::text::Line;
-use ratatui::widgets::Widget;
+use ratatui_core::buffer::Buffer;
+use ratatui_core::layout::Rect;
+use ratatui_core::style::{Style, Styled};
+use ratatui_core::text::Line;
+use ratatui_core::widgets::Widget;
 use unicode_width::UnicodeWidthStr;
 
 /// A bar to be shown by the [`BarChart`](super::BarChart) widget.
@@ -371,7 +371,7 @@ impl Styled for Bar<'_> {
 
 #[cfg(test)]
 mod tests {
-    use ratatui::style::{Color, Modifier, Style, Stylize};
+    use ratatui_core::style::{Color, Modifier, Style, Stylize};
 
     use super::*;
 

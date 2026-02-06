@@ -1,16 +1,16 @@
 //! The [`BarChart`] widget and its related types (e.g. [`Bar`], [`BarGroup`]).
 
-use ratatui::buffer::Buffer;
-use ratatui::layout::{Alignment, Direction, Rect};
-use ratatui::style::{Style, Styled};
+use ratatui_core::buffer::Buffer;
+use ratatui_core::layout::{Alignment, Direction, Rect};
+use ratatui_core::style::{Style, Styled};
 // use ratatui::symbols;
 use crate::symbols;
-use ratatui::text::Line;
-use ratatui::widgets::Widget;
+use ratatui_core::text::Line;
+use ratatui_core::widgets::Widget;
 
 pub use self::bar::Bar;
 pub use self::bar_group::BarGroup;
-use ratatui::widgets::{Block, BlockExt};
+use ratatui_widgets::block::{Block, BlockExt};
 
 mod bar;
 mod bar_group;
@@ -927,13 +927,13 @@ impl Styled for BarChart<'_> {
 #[cfg(test)]
 mod tests {
     use itertools::iproduct;
-    use ratatui::layout::Alignment;
-    use ratatui::style::{Color, Modifier, Stylize};
-    use ratatui::text::Span;
+    use ratatui_core::layout::Alignment;
+    use ratatui_core::style::{Color, Modifier, Stylize};
+    use ratatui_core::text::Span;
     use rstest::rstest;
 
     use super::*;
-    use ratatui::widgets::BorderType;
+    use ratatui_widgets::borders::BorderType;
 
     #[test]
     fn default() {

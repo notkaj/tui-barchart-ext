@@ -5,6 +5,7 @@ edition = "2024"
 
 [dependencies]
 itertools = "0.14.0"
-ratatui = "0.30.0"
+ratatui-core = "0.1.0"
+ratatui-widgets = "0.3.0"
 rstest = "0.26.1"
 unicode-width = "0.2.2"

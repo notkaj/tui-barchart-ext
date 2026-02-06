@@ -7,6 +7,14 @@ pub const THREE_EIGHTHS: &str = "▍";
 pub const ONE_QUARTER: &str = "▎";
 pub const ONE_EIGHTH: &str = "▏";
 
+pub const RIGHT_ONE_EIGHTH: &str = "▕";
+pub const RIGHT_ONE_QUARTER: &str = "🮇";
+pub const RIGHT_THREE_EIGHTHS: &str = "🮈";
+pub const RIGHT_HALF: &str = "▐";
+pub const RIGHT_FIVE_EIGHTHS: &str = "🮉";
+pub const RIGHT_THREE_QUARTERS: &str = "🮊";
+pub const RIGHT_SEVEN_EIGHTHS: &str = "🮋";
+
 #[derive(Debug, Clone, Eq, PartialEq, Hash)]
 pub struct Set<'a> {
     pub full: &'a str,

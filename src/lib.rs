@@ -1,2 +1,2 @@
-mod barchart;
+pub mod barchart;
 mod symbols;

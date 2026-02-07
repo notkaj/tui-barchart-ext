@@ -568,7 +568,6 @@ impl BarChart<'_> {
                 let bar_style = self.bar_style.patch(bar.style);
 
                 let rem_symbol = match bar_rem {
-                    0 => self.bar_set.empty,
                     1 => self.bar_set.one_eighth,
                     2 => self.bar_set.one_quarter,
                     3 => self.bar_set.three_eighths,
@@ -576,20 +575,25 @@ impl BarChart<'_> {
                     5 => self.bar_set.five_eighths,
                     6 => self.bar_set.three_quarters,
                     7 => self.bar_set.seven_eighths,
-                    _ => self.bar_set.full,
+                    _ => self.bar_set.empty,
                 };
 
                 for y in 0..self.bar_width {
                     let bar_y = bar_y + y;
                     for x in 0..bar_length {
-                        let symbol = self.bar_set.full;
                         buf[(bars_area.left() + x, bar_y)]
-                            .set_symbol(symbol)
+                            .set_symbol(self.bar_set.full)
                             .set_style(bar_style);
                     }
-                    buf[(bars_area.left() + bar_length, bar_y)]
-                        .set_symbol(rem_symbol)
-                        .set_style(bar_style);
+                }
+
+                if bar_rem > 0 {
+                    for y in 0..self.bar_width {
+                        let bar_y = bar_y + y;
+                        buf[(bars_area.left() + bar_length, bar_y)]
+                            .set_symbol(rem_symbol)
+                            .set_style(bar_style);
+                    }
                 }
 
                 let bar_value_area = Rect {

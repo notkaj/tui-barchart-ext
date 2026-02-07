@@ -15,6 +15,22 @@ pub const UPPER_FIVE_EIGHTHS: &str = "🮄";
 pub const UPPER_THREE_QUARTERS: &str = "🮅";
 pub const UPPER_SEVEN_EIGHTHS: &str = "🮆";
 
+pub const HORIZONTAL_SEVEN_EIGHTHS: &str = "▉";
+pub const HORIZONTAL_THREE_QUARTERS: &str = "▊";
+pub const HORIZONTAL_FIVE_EIGHTHS: &str = "▋";
+pub const HORIZONTAL_HALF: &str = "▌";
+pub const HORIZONTAL_THREE_EIGHTHS: &str = "▍";
+pub const HORIZONTAL_ONE_QUARTER: &str = "▎";
+pub const HORIZONTAL_ONE_EIGHTH: &str = "▏";
+
+pub const HORIZONTAL_RIGHT_ONE_EIGHTH: &str = "▕";
+pub const HORIZONTAL_RIGHT_ONE_QUARTER: &str = "🮇";
+pub const HORIZONTAL_RIGHT_THREE_EIGHTHS: &str = "🮈";
+pub const HORIZONTAL_RIGHT_HALF: &str = "▐";
+pub const HORIZONTAL_RIGHT_FIVE_EIGHTHS: &str = "🮉";
+pub const HORIZONTAL_RIGHT_THREE_QUARTERS: &str = "🮊";
+pub const HORIZONTAL_RIGHT_SEVEN_EIGHTHS: &str = "🮋";
+
 #[derive(Debug, Clone, Eq, PartialEq, Hash)]
 pub struct Set<'a> {
     pub full: &'a str,
@@ -68,5 +84,29 @@ pub const UPPER_NINE_LEVELS: Set = Set {
     three_eighths: UPPER_THREE_EIGHTHS,
     one_quarter: UPPER_ONE_QUARTER,
     one_eighth: UPPER_ONE_EIGHTH,
+    empty: " ",
+};
+
+pub const HORIZONTAL_NINE_LEVELS: Set = Set {
+    full: FULL,
+    seven_eighths: HORIZONTAL_SEVEN_EIGHTHS,
+    three_quarters: HORIZONTAL_THREE_QUARTERS,
+    five_eighths: HORIZONTAL_FIVE_EIGHTHS,
+    half: HORIZONTAL_HALF,
+    three_eighths: HORIZONTAL_THREE_EIGHTHS,
+    one_quarter: HORIZONTAL_ONE_QUARTER,
+    one_eighth: HORIZONTAL_ONE_EIGHTH,
+    empty: " ",
+};
+
+pub const HORIZONTAL_RIGHT_NINE_LEVELS: Set = Set {
+    full: FULL,
+    seven_eighths: HORIZONTAL_RIGHT_SEVEN_EIGHTHS,
+    three_quarters: HORIZONTAL_RIGHT_THREE_QUARTERS,
+    five_eighths: HORIZONTAL_RIGHT_FIVE_EIGHTHS,
+    half: HORIZONTAL_RIGHT_HALF,
+    three_eighths: HORIZONTAL_RIGHT_THREE_EIGHTHS,
+    one_quarter: HORIZONTAL_RIGHT_ONE_QUARTER,
+    one_eighth: HORIZONTAL_RIGHT_ONE_EIGHTH,
     empty: " ",
 };

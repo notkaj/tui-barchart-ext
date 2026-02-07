@@ -4,7 +4,7 @@ use ratatui_core::buffer::Buffer;
 use ratatui_core::layout::{Alignment, Direction, Rect};
 use ratatui_core::style::{Style, Styled};
 // use ratatui::symbols;
-use crate::symbols;
+use crate::bar_symbols;
 use ratatui_core::text::Line;
 use ratatui_core::widgets::Widget;
 
@@ -88,7 +88,7 @@ pub struct BarChart<'a> {
     /// The gap between each group
     group_gap: u16,
     /// Set of symbols used to display the data
-    bar_set: symbols::bar::Set<'a>,
+    bar_set: bar_symbols::Set<'a>,
     /// Style of the bars
     bar_style: Style,
     /// Style of the values printed at the bottom of each bar
@@ -120,7 +120,7 @@ impl Default for BarChart<'_> {
             value_style: Style::default(),
             label_style: Style::default(),
             group_gap: 0,
-            bar_set: symbols::bar::NINE_LEVELS,
+            bar_set: bar_symbols::NINE_LEVELS,
             style: Style::default(),
             direction: Direction::Vertical,
             is_inverted: false,
@@ -169,6 +169,7 @@ impl<'a> BarChart<'a> {
         Self {
             data: vec![BarGroup::new(bars.into())],
             direction: Direction::Horizontal,
+            bar_set: bar_symbols::HORIZONTAL_NINE_LEVELS,
             ..Default::default()
         }
     }
@@ -324,7 +325,7 @@ impl<'a> BarChart<'a> {
     ///
     /// If not set, the default is [`bar::NINE_LEVELS`](ratatui_core::symbols::bar::NINE_LEVELS).
     #[must_use = "method moves the value of self and returns the modified value"]
-    pub const fn bar_set(mut self, bar_set: symbols::bar::Set<'a>) -> Self {
+    pub const fn bar_set(mut self, bar_set: bar_symbols::Set<'a>) -> Self {
         self.bar_set = bar_set;
         self
     }
@@ -410,6 +411,12 @@ impl<'a> BarChart<'a> {
     #[must_use = "method moves the value of self and returns the modified value"]
     pub const fn direction(mut self, direction: Direction) -> Self {
         self.direction = direction;
+        self.bar_set = match (direction, self.is_inverted) {
+            (Direction::Vertical, false) => bar_symbols::NINE_LEVELS,
+            (Direction::Vertical, true) => bar_symbols::UPPER_NINE_LEVELS,
+            (Direction::Horizontal, false) => bar_symbols::HORIZONTAL_NINE_LEVELS,
+            (Direction::Horizontal, true) => bar_symbols::HORIZONTAL_RIGHT_NINE_LEVELS,
+        };
         self
     }
 
@@ -435,7 +442,10 @@ impl<'a> BarChart<'a> {
     #[must_use = "method moves the value of self and returns the modified value"]
     pub const fn inverted(mut self) -> Self {
         self.is_inverted = true;
-        self.bar_set = symbols::bar::UPPER_NINE_LEVELS;
+        self.bar_set = match self.direction {
+            Direction::Vertical => bar_symbols::UPPER_NINE_LEVELS,
+            Direction::Horizontal => bar_symbols::HORIZONTAL_RIGHT_NINE_LEVELS,
+        };
         self
     }
 }
@@ -1058,7 +1068,7 @@ mod tests {
         let mut buffer = Buffer::empty(Rect::new(0, 0, 10, 3));
         let widget = BarChart::default()
             .data(&[("foo", 0), ("bar", 1), ("baz", 3)])
-            .bar_set(symbols::bar::THREE_LEVELS);
+            .bar_set(bar_symbols::THREE_LEVELS);
         widget.render(buffer.area, &mut buffer);
         #[rustfmt::skip]
         let expected = Buffer::with_lines([
@@ -1084,7 +1094,7 @@ mod tests {
                 ("h", 7),
                 ("i", 8),
             ])
-            .bar_set(symbols::bar::NINE_LEVELS);
+            .bar_set(bar_symbols::NINE_LEVELS);
         widget.render(Rect::new(0, 1, 18, 2), &mut buffer);
         let expected = Buffer::with_lines([
             "                  ",
@@ -1109,7 +1119,7 @@ mod tests {
                 ("h", 7),
                 ("i", 8),
             ])
-            .bar_set(symbols::bar::NINE_LEVELS)
+            .bar_set(bar_symbols::NINE_LEVELS)
             .inverted();
         widget.render(Rect::new(0, 0, 18, 2), &mut buffer);
         let expected = Buffer::with_lines([
@@ -1573,7 +1583,7 @@ mod tests {
 
         let chart = BarChart::default()
             .data(group)
-            .bar_set(symbols::bar::NINE_LEVELS);
+            .bar_set(bar_symbols::NINE_LEVELS);
 
         let mut buffer = Buffer::empty(Rect::new(0, 0, 17, 1));
         chart.render(buffer.area, &mut buffer);
@@ -1598,7 +1608,7 @@ mod tests {
 
         let chart = BarChart::default()
             .data(group)
-            .bar_set(symbols::bar::NINE_LEVELS);
+            .bar_set(bar_symbols::NINE_LEVELS);
 
         let mut buffer = Buffer::empty(Rect::new(0, 0, 17, 3));
         chart.render(Rect::new(0, 1, buffer.area.width, 2), &mut buffer);
@@ -1628,7 +1638,7 @@ mod tests {
 
         let chart = BarChart::default()
             .data(group)
-            .bar_set(symbols::bar::NINE_LEVELS);
+            .bar_set(bar_symbols::NINE_LEVELS);
 
         let mut buffer = Buffer::empty(Rect::new(0, 0, 17, 3));
         chart.render(buffer.area, &mut buffer);
@@ -1658,7 +1668,7 @@ mod tests {
         let chart = BarChart::default()
             .data(group)
             .bar_width(2)
-            .bar_set(symbols::bar::NINE_LEVELS);
+            .bar_set(bar_symbols::NINE_LEVELS);
 
         let mut buffer = Buffer::empty(Rect::new(0, 0, 26, 3));
         chart.render(buffer.area, &mut buffer);
@@ -1688,7 +1698,7 @@ mod tests {
 
         let chart = BarChart::default()
             .data(group)
-            .bar_set(symbols::bar::NINE_LEVELS);
+            .bar_set(bar_symbols::NINE_LEVELS);
 
         let mut buffer = Buffer::empty(Rect::new(0, 0, 17, 4));
         chart.render(buffer.area, &mut buffer);

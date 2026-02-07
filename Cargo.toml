@@ -9,3 +9,8 @@ ratatui-core = "0.1.0"
 ratatui-widgets = "0.3.0"
 rstest = "0.26.1"
 unicode-width = "0.2.2"
+
+[dev-dependencies]
+ratatui = "0.30.0"
+crossterm = "0.29.0"
+color-eyre = "0.6.5"

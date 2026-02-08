@@ -44,6 +44,21 @@ pub struct Set<'a> {
     pub empty: &'a str,
 }
 
+impl Set<'_> {
+    pub fn symbol(&self, level: u8) -> &str {
+        match level {
+            1 => self.one_eighth,
+            2 => self.one_quarter,
+            3 => self.three_eighths,
+            4 => self.half,
+            5 => self.five_eighths,
+            6 => self.three_quarters,
+            7 => self.seven_eighths,
+            _ => self.empty,
+        }
+    }
+}
+
 impl Default for Set<'_> {
     fn default() -> Self {
         NINE_LEVELS

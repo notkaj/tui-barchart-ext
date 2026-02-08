@@ -564,19 +564,7 @@ impl BarChart<'_> {
         for (ticks_vec, group) in group_ticks.into_iter().zip(self.data.iter()) {
             for (ticks, bar) in ticks_vec.into_iter().zip(group.bars.iter()) {
                 let bar_length = (ticks / 8) as u16;
-                let bar_rem = ticks % 8;
                 let bar_style = self.bar_style.patch(bar.style);
-
-                let rem_symbol = match bar_rem {
-                    1 => self.bar_set.one_eighth,
-                    2 => self.bar_set.one_quarter,
-                    3 => self.bar_set.three_eighths,
-                    4 => self.bar_set.half,
-                    5 => self.bar_set.five_eighths,
-                    6 => self.bar_set.three_quarters,
-                    7 => self.bar_set.seven_eighths,
-                    _ => self.bar_set.empty,
-                };
 
                 for y in 0..self.bar_width {
                     let bar_y = bar_y + y;
@@ -587,11 +575,14 @@ impl BarChart<'_> {
                     }
                 }
 
+                let bar_rem = ticks as u8 % 8;
+
                 if bar_rem > 0 {
+                    let sym = self.bar_set.symbol(bar_rem);
                     for y in 0..self.bar_width {
                         let bar_y = bar_y + y;
                         buf[(bars_area.left() + bar_length, bar_y)]
-                            .set_symbol(rem_symbol)
+                            .set_symbol(sym)
                             .set_style(bar_style);
                     }
                 }

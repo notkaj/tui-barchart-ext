@@ -773,6 +773,18 @@ impl BarChart<'_> {
                     }
                 }
 
+                let bar_rem = ticks as u8 % 8;
+
+                if bar_rem > 0 {
+                    let sym = self.bar_set.symbol(bar_rem);
+                    for y in 0..self.bar_width {
+                        let bar_y = bar_y + y;
+                        buf[(bars_area.left() + bar_length, bar_y)]
+                            .set_symbol(sym)
+                            .set_style(bar_style);
+                    }
+                }
+
                 let bar_value_area = Rect {
                     y: bar_y + (self.bar_width >> 1),
                     ..bars_area

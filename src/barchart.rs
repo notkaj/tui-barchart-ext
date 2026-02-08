@@ -770,7 +770,7 @@ impl BarChart<'_> {
                     let sym = self.bar_set.symbol(bar_rem);
                     for y in 0..self.bar_width {
                         let bar_y = bar_y + y;
-                        buf[(bars_area.left() + bar_length, bar_y)]
+                        buf[(bars_area.right() - bar_length, bar_y)]
                             .set_symbol(sym)
                             .set_style(bar_style);
                     }

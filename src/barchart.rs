@@ -1443,7 +1443,7 @@ mod tests {
         let chart = BarChart::default()
             .direction(Direction::Horizontal)
             .bar_gap(0)
-            .data(&[("Jan", 10), ("Feb", 20), ("Mar", 5)]);
+            .data(&[("Jan", 10), ("Feb", 20), ("Mar", 1)]);
 
         let mut buffer = Buffer::empty(Rect::new(0, 0, 10, 3));
         chart.render(buffer.area, &mut buffer);
@@ -1451,7 +1451,7 @@ mod tests {
         let expected = Buffer::with_lines([
             "Jan 10█   ",
             "Feb 20████",
-            "Mar 5     ",
+            "Mar 1     ",
         ]);
         assert_eq!(buffer, expected);
     }
@@ -1462,7 +1462,7 @@ mod tests {
         let chart = BarChart::default()
             .direction(Direction::Horizontal)
             .bar_gap(0)
-            .data(&[("Jan", 10), ("Feb", 20), ("Mar", 5)])
+            .data(&[("Jan", 10), ("Feb", 20), ("Mar", 1)])
             .inverted();
 
         let mut buffer = Buffer::empty(Rect::new(0, 0, 10, 3));
@@ -1476,7 +1476,7 @@ mod tests {
         let expected = Buffer::with_lines([
             "   █10 Jan",
             "████20 Feb",
-            "     5 Mar",
+            "     1 Mar",
         ]);
         assert_eq!(buffer, expected);
     }

@@ -16,6 +16,11 @@ use tui_barchart_ext::barchart::{Bar, BarChart};
 ```
 let chart = BarChart::horizontal(bars).bar_width(3);
 ```
+
+# Extra Features:
+ - Inverted bars (top to bottom, right to left)
+ - Nine level horizontal bars
+
 details forthcoming
 
 

@@ -1,26 +1,26 @@
-### BarChart
+# BarChart
 
 This displays a BarChart in a Ratatui application
 
-This widget is directly lifted from Ratatui, made to be its own standalone widget, and with some of my own additions.
+This widget is directly lifted from Ratatui, refactored as its own standalone widget, and augmented with additional features (see `Extra Features`)
 
-Usage:
+### Usage:
 
-Cargo.toml
+<sub>Cargo.toml:</sub>
 ```
 tui-barchart-ext = { git = "https://github.com/notkaj/tui-barchart-ext.git", version = "0.1.0" }
 ```
+<sub>Import:</sub>
 ```
 use tui_barchart_ext::barchart::{Bar, BarChart};
 ```
+<sub>Instantiate:</sub>
 ```
 let chart = BarChart::horizontal(bars).bar_width(3);
 ```
 
-# Extra Features:
+### Extra Features:
  - Inverted bars (top to bottom, right to left)
  - Nine level horizontal bars
 
 details forthcoming
-
-

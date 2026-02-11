@@ -1,6 +1,6 @@
 [package]
 name = "tui-barchart-ext"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2024"
 license = "MIT"
 description = "Ratatui BarChart widget with extensions"
@@ -10,13 +10,13 @@ readme = "README.md"
 
 
 [dependencies]
-itertools = "0.14.0"
 ratatui-core = "0.1.0"
 ratatui-widgets = "0.3.0"
-rstest = "0.26.1"
 unicode-width = "0.2.2"
 
 [dev-dependencies]
+rstest = "0.26.1"
+itertools = "0.14.0"
 ratatui = "0.30.0"
 crossterm = "0.29.0"
 color-eyre = "0.6.5"

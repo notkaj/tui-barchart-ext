@@ -2,7 +2,7 @@
 name = "tui-barchart-ext"
 version = "0.1.0"
 edition = "2024"
-license-file = "MIT"
+license = "MIT"
 description = "Ratatui BarChart widget with extensions"
 homepage = "https://github.com/notkaj/tui-barchart-ext"
 repository = "https://github.com/notkaj/tui-barchart-ext"

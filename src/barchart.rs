@@ -463,6 +463,7 @@ impl BarChart<'_> {
     /// `bar_max_length` is the maximal length a bar can take.
     fn group_ticks(&self, available_space: u16, bar_max_length: u16) -> Vec<Vec<u64>> {
         let max: u64 = self.maximum_data_value();
+        let bar_max_length = bar_max_length as u64;
         self.data
             .iter()
             .scan(available_space, |space, group| {
@@ -490,7 +491,13 @@ impl BarChart<'_> {
                         .bars
                         .iter()
                         .take(n as usize)
-                        .map(|bar| bar.value * u64::from(bar_max_length) * 8 / max)
+                        .map(|bar| {
+                            if bar.value > max {
+                                bar_max_length * 8
+                            } else {
+                                bar.value * bar_max_length * 8 / max
+                            }
+                        })
                         .collect()
                 })
             })

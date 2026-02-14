@@ -630,7 +630,7 @@ impl BarChart<'_> {
             ..area
         };
 
-        let group_ticks = self.group_ticks(bars_area.width, bars_area.height);
+        let group_ticks = self.group_ticks(bars_area.width, bars_area.height - label_info.height);
         self.render_vertical_bars(bars_area, buf, &group_ticks);
         self.render_labels_and_values(area, buf, label_info, &group_ticks);
     }

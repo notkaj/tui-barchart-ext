@@ -636,7 +636,7 @@ impl BarChart<'_> {
             ..area
         };
 
-        let group_ticks = self.group_ticks(bars_area.width, bars_area.height - label_info.height);
+        let group_ticks = self.group_ticks(bars_area.width, bars_area.height);
         self.render_vertical_bars(bars_area, buf, &group_ticks);
         self.render_labels_and_values(area, buf, label_info, &group_ticks);
     }
@@ -828,9 +828,7 @@ impl BarChart<'_> {
             ..area
         };
 
-        // the non-inverted version of this doesn't account for label height, which i
-        // think is incorrect. i increment throught the ticks differently so it was an issue for me
-        let group_ticks = self.group_ticks(bars_area.width, bars_area.height - label_info.height);
+        let group_ticks = self.group_ticks(bars_area.width, bars_area.height.saturating_sub(1));
         self.render_vertical_bars_inverted(bars_area, buf, &group_ticks);
         self.render_labels_and_values_inverted(area, buf, label_info, &group_ticks);
     }

@@ -843,32 +843,26 @@ impl BarChart<'_> {
         let mut bar_x = area.left();
         for (ticks_vec, group) in group_ticks.iter().zip(&self.data) {
             for (ticks, bar) in ticks_vec.iter().zip(&group.bars) {
-                let mut ticks = *ticks;
-                // for j in 0..area.height {
-                let mut i: u16 = 0;
-                while ticks > 0 {
-                    let symbol = match ticks {
-                        0 => self.bar_set.empty,
-                        1 => self.bar_set.one_eighth,
-                        2 => self.bar_set.one_quarter,
-                        3 => self.bar_set.three_eighths,
-                        4 => self.bar_set.half,
-                        5 => self.bar_set.five_eighths,
-                        6 => self.bar_set.three_quarters,
-                        7 => self.bar_set.seven_eighths,
-                        _ => self.bar_set.full,
-                    };
+                let bar_length = (*ticks / 8) as u16;
+                let bar_width = self.bar_width;
+                let bar_style = self.bar_style.patch(bar.style);
 
-                    let bar_style = self.bar_style.patch(bar.style);
-
-                    for x in 0..self.bar_width {
-                        buf[(bar_x + x, area.top() + i)]
-                            .set_symbol(symbol)
+                for y in 0..bar_length {
+                    for x in 0..bar_width {
+                        buf[(bar_x + x, area.top() + y)]
+                            .set_symbol(self.bar_set.full)
                             .set_style(bar_style);
                     }
+                }
 
-                    i = i.saturating_add(1);
-                    ticks = ticks.saturating_sub(8);
+                let bar_rem = ticks % 8;
+                if bar_rem > 0 {
+                    let sym = self.bar_set.symbol(bar_rem as u8);
+                    for x in 0..bar_width {
+                        buf[(bar_x + x, area.top() + bar_length)]
+                            .set_symbol(sym)
+                            .set_style(bar_style);
+                    }
                 }
                 bar_x += self.bar_gap + self.bar_width;
             }

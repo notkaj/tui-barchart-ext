@@ -822,10 +822,11 @@ impl BarChart<'_> {
 
         let bars_area = Rect {
             y: area.top().saturating_add(label_info.height),
+            height: area.height.saturating_sub(label_info.height),
             ..area
         };
 
-        let group_ticks = self.group_ticks(bars_area.width, bars_area.height.saturating_sub(1));
+        let group_ticks = self.group_ticks(bars_area.width, bars_area.height);
         self.render_vertical_bars_inverted(bars_area, buf, &group_ticks);
         self.render_labels_and_values_inverted(area, buf, label_info, &group_ticks);
     }
@@ -840,7 +841,7 @@ impl BarChart<'_> {
         let mut bar_x = area.left();
         for (ticks_vec, group) in group_ticks.iter().zip(&self.data) {
             for (ticks, bar) in ticks_vec.iter().zip(&group.bars) {
-                let bar_length = (*ticks / 8) as u16;
+                let bar_length = (ticks / 8) as u16;
                 let bar_width = self.bar_width;
                 let bar_style = self.bar_style.patch(bar.style);
 

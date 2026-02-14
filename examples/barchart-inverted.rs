@@ -70,6 +70,6 @@ fn render_vertical_barchart(frame: &mut Frame, area: Rect) {
         Bar::with_label("Green", 15).green(),
         Bar::with_label("Yellow", 10).yellow(),
     ];
-    let chart = BarChart::vertical(bars).bar_width(6);
+    let chart = BarChart::vertical(bars).bar_width(6).inverted();
     frame.render_widget(chart, area);
 }

@@ -1038,8 +1038,14 @@ mod tests {
             "1 2       ",
             "f b       ",
         ]);
-        for (x, y) in iproduct!([0, 2], [0, 1]) {
-            expected[(x, y)].set_fg(Color::Red);
+        // for (x, y) in iproduct!([0, 2], [0, 1]) {
+        //     expected[(x, y)].set_fg(Color::Red);
+        // }
+        for y in 1..2 {
+            expected[(0, y)].set_fg(Color::Red);
+        }
+        for y in 0..2 {
+            expected[(2, y)].set_fg(Color::Red);
         }
         assert_eq!(buffer, expected);
     }

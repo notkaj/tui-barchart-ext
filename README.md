@@ -6,9 +6,9 @@ This widget is directly lifted from Ratatui, refactored as its own standalone wi
 
 ### Usage:
 
-<sub>Cargo.toml:</sub>
+<sub>cargo:</sub>
 ```
-tui-barchart-ext = { git = "https://github.com/notkaj/tui-barchart-ext.git", version = "0.1.0" }
+cargo add tui-barchart-ext
 ```
 <sub>Import:</sub>
 ```

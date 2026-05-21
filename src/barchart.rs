@@ -462,8 +462,8 @@ impl BarChart<'_> {
     /// `available_space` used to calculate how many bars can fit in the space
     /// `bar_max_length` is the maximal length a bar can take.
     fn group_ticks(&self, available_space: u16, bar_max_length: u16) -> Vec<Vec<u64>> {
-        let max: u64 = self.maximum_data_value();
-        let bar_max_length = bar_max_length as u64;
+        let max = self.maximum_data_value() as u128;
+        let bar_max_ticks = bar_max_length as u128 * 8;
         self.data
             .iter()
             .scan(available_space, |space, group| {
@@ -471,7 +471,7 @@ impl BarChart<'_> {
                     return None;
                 }
                 let n_bars = group.bars.len() as u16;
-                let group_width = n_bars * self.bar_width + n_bars.saturating_sub(1) * self.bar_gap;
+                let group_width = n_bars * self.bar_width + self.bar_gap * n_bars.saturating_sub(1);
 
                 let n_bars = if *space > group_width {
                     *space = space.saturating_sub(group_width + self.group_gap + self.bar_gap);
@@ -492,11 +492,9 @@ impl BarChart<'_> {
                         .iter()
                         .take(n as usize)
                         .map(|bar| {
-                            if bar.value > max {
-                                bar_max_length * 8
-                            } else {
-                                bar.value * bar_max_length * 8 / max
-                            }
+                            let val = bar.value as u128;
+                            let ticks = val * bar_max_ticks / max;
+                            ticks.min(bar_max_ticks) as u64
                         })
                         .collect()
                 })
@@ -1789,6 +1787,27 @@ mod tests {
             "a  b   ",
         ]);
         assert_eq!(buffer, expected);
+    }
+
+    #[test]
+    fn render_handles_u64_max_value() {
+        let chart = BarChart::new([Bar::new(u64::MAX)]).max(u64::MAX);
+        let mut buffer = Buffer::empty(Rect::new(0, 0, 5, 5));
+
+        chart.render(buffer.area, &mut buffer);
+
+        let expected = Buffer::with_lines(["█    "; 5]);
+        assert_eq!(buffer, expected);
+    }
+
+    #[test]
+    fn render_keeps_integer_precision_for_large_values() {
+        let chart = BarChart::new([Bar::new(u64::MAX - 1)]).max(u64::MAX);
+        let mut buffer = Buffer::empty(Rect::new(0, 0, 1, 1));
+
+        chart.render(buffer.area, &mut buffer);
+
+        assert_eq!(buffer, Buffer::with_lines(["▇"]));
     }
 
     #[test]
